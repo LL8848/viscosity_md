@@ -12,6 +12,7 @@ Directory Structure
         ├── archive_eq       # Input & output files for equilibration in LAMMPS
         ├── visc             # All the viscosity outputs
         ├── eq_system        # Equilibrated systems
+        ├── new              # New files are placed here temporarily
     └── src                  # Codes for post-processing LAMMPS outputs
         ├── lmpoutpose.py    # Module for post-processing general output of LAMMPS ave/time fix
         ├── viscpost.py      # Module for post-processing viscosity data
@@ -23,12 +24,16 @@ Directory Structure
 
 General Workflow
 ------
-1.	Download files from the server to local:  ```./data/new```
-2.	Open a iPython-like terminal or a Juypter notebook, cd to ```./data/new```, use ```vba=analyze()``` to quick-check all the new data; use ```plot('filename')``` to visualize pressure, energy, etc.
-    * use ```vd = vba.get(srate)``` to quickly retrieve a dataset for a state point
-    * deep steady-state check: use ```vd.acf()```, ```vd.ssplot()```, ```vd.setss1()```, etc
-3.	If steady-state is reached, run ```copy('PEC5')``` to copy the visc_ file to the ```./PEC5_visc```. Move all files in ```./data/new``` out to ```./data/archive```. Otherwise go back to LAMMPS for longer simulation until reaching steady-state.
-4.	Create a Jupyter notebook (may use an existing template) to do analysis and write report.  Export results if necessary for later OriginLab plot making.
+1.	Use the scripts in ```/lmpscript``` to run equilbration and NEMD simulations using LAMMPS on a HPC server.
+2.  When computation completed, download the files from the server to local:  ```./data/new```.
+3.	Open a iPython-like terminal or a Juypter notebook, cd to ```./data/new```, import the modules in ```/src``` to post-process and analyze the data. Here are some tips:
+    * Use ```vba = analyze()``` to quick-check all the viscosity output files in ```./data/new```. ```vba``` is a ```BatchData``` class that has a bunch of useful functions you can play with to analyze the viscosity data.
+    * Use ```plot('filename')``` to visualize the output files that compute pressure, energy, etc. as a function of time. This is primarily to check if the equilibration or steady state is reached.
+    * Use ```vd = vba.get(srate)``` to quickly retrieve a dataset for a state point. srate is the shear rate (1/s), e.g, 1e8, 1e9. ```vd``` is a ```ViscData``` class that also has a bunch of useful functions for analysis.
+    * Deep steady-state check: use ```vd.acf()```, ```vd.ssplot()```, ```vd.setss1()```, etc
+    * Check the cheatsheet below for the full usages of the functions.
+4.	If steady-state is reached and desired statistical accuracy has been achieved, run ```copy('PEC5')``` to copy the visc_ file to the ```./PEC5_visc```. Move all files in ```./data/new``` out to ```./data/archive```. Otherwise go back to LAMMPS for longer simulation until reaching the desired results.
+5.	Create a Jupyter notebook (may use an existing template) to do analysis and write report.  Export results if necessary for later OriginLab plot making.
 
 
 Cheatsheet for the source code
