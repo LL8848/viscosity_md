@@ -37,7 +37,7 @@ Directory Structure
 General Workflow
 ------
 1.	Use the scripts in ```/lmpscript``` to run equilbration and NEMD simulations using LAMMPS on a HPC server.
-2.  When computation completed, download the files from the server to local:  ```./data/new```.
+2.  When computation completed, download the files from the server to:  ```./data/new```.
 3.	Open a iPython-like terminal or a Juypter notebook, cd to ```./data/new```, import the modules in ```/src``` to post-process and analyze the data. Here are some tips:
     * Use ```vba = analyze()``` to quick-check all the viscosity output files in ```./data/new```. ```vba``` is a ```BatchData``` class that has a bunch of useful functions you can play with to analyze the viscosity data.
     * Use ```plot('filename')``` to visualize the output files that compute pressure, energy, etc. as a function of time. This is primarily to check if the equilibration or steady state is reached.
@@ -45,7 +45,7 @@ General Workflow
     * Deep steady-state check: use ```vd.acf()```, ```vd.ssplot()```, ```vd.setss1()```, etc
     * Check the **cheatsheet** below for the complete usage of the functions and classes.
 4.	If steady-state is reached and desired statistical accuracy has been achieved, run ```copy('PEC5')``` to copy the visc_ file to the ```./PEC5_visc```. Move all files in ```./data/new``` out to ```./data/archive```. Otherwise go back to LAMMPS for longer simulation until reaching the desired results.
-5.	Create a Jupyter notebook (may use an existing template) to do analysis and write report.  Export results if necessary for later OriginLab plot making.
+5.	Create a Jupyter notebook to do analysis and write report.  Export results if necessary for publication and making plot using other software.
 
 
 Cheatsheet for the source code
