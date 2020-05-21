@@ -1,4 +1,6 @@
 # Viscosity Prediction through Non-Equilibrium Molecular Dynamics Simulation
+Lingnan Lin, April 2020
+
 What this code does
 ------
 * Prepare scripts for standard non-equilibrium molecular dynamics (NEMD) simulation in LAMMPS to compute viscosity.
@@ -6,6 +8,7 @@ What this code does
 * Users can predict the viscosity of any liquid for various temperature, pressure and shear rate.
 * Users can perform block averaging and autocorrelation analysis to evaluate the computing uncertainties and sampling quality.
 * Users can fit the shear viscosities to a rheology model to extrapolate the Newtonian viscosity. Supported models include Eyring, Carreau, Carreau-Yasuda, Cross. Users can also add their own models by writing a Python function using the template.
+* Several fully equilibrated systems of polyol esters are provided.  Available chemicals include: pentaerythritol tetrapentanoate (POE5), pentaerythritol tetrahexanoate (PEC6), pentaerythritol tetraheptanoate (POE7), and pentaerythritol tetranonanoate (POE9). Temperature ranges from 258 K to 373 K.  Pressure ranges from 0.1 MPa to 300 MPa.  I'll constantly upload the systems I made to share with you.
 
 Dependencies
 ------
