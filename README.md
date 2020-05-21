@@ -2,10 +2,12 @@
 
 What this code does
 ------
-* Perform standard non-equilibrium molecular dynamics simulation and analysis for liquid (originally aimmed for polyol esters).
-* Users can predict the viscosity of a liquid at various temperature, pressure and shear rate. 
-* The molecular dynamics simulations are done in LAMMPS. 
-* The pre- and post-processing code is written in Python 3, which depends on Python libraries including numpy, pandas, matplotlib, scipy, os, etc.
+* Prepare scripts for standard non-equilibrium molecular dynamics (NEMD) simulation in LAMMPS to compute viscosity.
+* Post-process the outputs from LAMMPS and perform conprehensive analysis.
+* Users can predict the viscosity of any liquid for various temperature, pressure and shear rate.
+* Users can perform block averaging and autocorrelation analysis to evaluate the computing uncertainties and sampling quality.
+* The molecular dynamics simulations are done in [LAMMPS](https://lammps.sandia.gov/). 
+* The pre- and post-processing code is written in Python 3, which depends on Python libraries including numpy, pandas, matplotlib, scipy, os, etc.  [Anaconda](https://www.anaconda.com/) is the recommended Python platform since it installs all dependencies.
 * Various rheology models can be used to fit the shear viscosity to extrapolate the Newtonian viscosity. Supported models include Eyring, Carreau, Carreau-Yasuda, Cross.
 
 Directory Structure
