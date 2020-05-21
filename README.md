@@ -3,9 +3,11 @@
 
 What this code does
 ------
-* Perform non-equilibrium molecular dynamics simulation for liquid (originally aimmed for poloyl esters)
+* Perform standard non-equilibrium molecular dynamics simulation and analysis for liquid (originally aimmed for polyol esters).
+* Users can predict the viscosity of a liquid at various temperature, pressure and shear rate. 
 * The molecular dynamics simulations are done in LAMMPS. 
-* The pre- and post-procssing code is written in Python 3, which depends on Python libraries including numpy, pandas, matplotlib, scipy, os, etc.
+* The pre- and post-processing code is written in Python 3, which depends on Python libraries including numpy, pandas, matplotlib, scipy, os, etc.
+* Various rheology models can be used to fit the shear viscosity to extrapolate the Newtonian viscosity. Supported models include Eyring, Carreau, Carreau-Yasuda, Cross.
 
 Directory Structure
 ------
