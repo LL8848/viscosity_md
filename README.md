@@ -50,3 +50,4 @@ General Workflow
 
 Cheatsheet for the source code
 ------
+![Alt Text](/cheatsheet-1.png)
