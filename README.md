@@ -45,8 +45,8 @@ General Workflow
     * Use ```vd = vba.get(srate)``` to quickly retrieve a dataset for a state point where srate is the shear rate (1/s), e.g, 1e8, 1e9. ```vd``` is a ```ViscData``` class that also has a bunch of useful functions for analysis.
     * Deep steady-state check: use ```vd.acf()```, ```vd.ssplot()```, ```vd.setss1()```, etc
     * Check the **cheatsheet** below for the complete usage of the functions and classes.
-4.	If steady-state is reached and desired statistical accuracy has been achieved, run ```copy('PEC5')``` to copy the visc_ file to the ```./PEC5_visc```. Move all files in ```./data/new``` out to ```./data/archive```. Otherwise go back to LAMMPS for longer simulation until reaching the desired results.
-5.	Create a Jupyter notebook to do analysis and write report.  Export results if necessary for publication and making plot using other software.
+4.	If steady-state is reached and desired statistical accuracy has been achieved, run ```copy('MaterialName')``` to copy the visc_ file to the ```./data/visc```. Move all files in ```./data/new``` to ```./data/archive```. Otherwise go back to LAMMPS for longer simulation until obtaining the desired results.
+5.	Create a Jupyter notebook to do analysis and write report using the modules in ```/src``` and the data in ```/data/visc```.  Export results if necessary for publication and making plot using other software.
 
 
 Cheatsheet for the source code
