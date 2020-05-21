@@ -44,12 +44,6 @@ General Workflow
     * Use ```plot('filename')``` to visualize the output files that compute pressure, energy, etc. as a function of time. This is primarily to check if the equilibration or steady state is reached.
     * Use ```vd = vba.get(srate)``` to quickly retrieve a dataset for a state point where srate is the shear rate (1/s), e.g, 1e8, 1e9. ```vd``` is a ```ViscData``` class that also has a bunch of useful functions for analysis.
     * Deep steady-state check: use ```vd.acf()```, ```vd.ssplot()```, ```vd.setss1()```, etc
-    * Check the [Cheatsheet](/cheatsheet-1.png) below for the complete usage of the functions and classes.
+    * Check the [Cheatsheet](/cheatsheet-1.png) I made for the complete usage of the functions and classes.
 4.	If steady-state is reached and desired statistical accuracy has been achieved, run ```copy('MaterialName')``` to copy the visc_ file to the ```./data/visc```. Move all files in ```./data/new``` to ```./data/archive```. Otherwise go back to LAMMPS for longer simulation until obtaining the desired results.
 5.	Create a Jupyter notebook to do analysis and write report using the modules in ```./src``` and the data in ```./data/visc```.  Export results if necessary for publication and making figures using other software.
-
-
-Cheatsheet
-------
-Cheat sheet for the post-processing modules in ```./src```
-![Alt Text](/cheatsheet-1.png)
