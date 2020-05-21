@@ -46,7 +46,7 @@ General Workflow
     * Deep steady-state check: use ```vd.acf()```, ```vd.ssplot()```, ```vd.setss1()```, etc
     * Check the **cheatsheet** below for the complete usage of the functions and classes.
 4.	If steady-state is reached and desired statistical accuracy has been achieved, run ```copy('MaterialName')``` to copy the visc_ file to the ```./data/visc```. Move all files in ```./data/new``` to ```./data/archive```. Otherwise go back to LAMMPS for longer simulation until obtaining the desired results.
-5.	Create a Jupyter notebook to do analysis and write report using the modules in ```/src``` and the data in ```/data/visc```.  Export results if necessary for publication and making plot using other software.
+5.	Create a Jupyter notebook to do analysis and write report using the modules in ```./src``` and the data in ```./data/visc```.  Export results if necessary for publication and making figures using other software.
 
 
 Cheatsheet for the source code
