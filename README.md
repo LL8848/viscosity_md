@@ -47,3 +47,16 @@ General Workflow
     * Check the [Cheatsheet](/cheatsheet-1.png) I made for the complete usage of the functions and classes.
 4.	If steady-state is reached and desired statistical accuracy has been achieved, run ```copy('MaterialName')``` to copy the visc_ file to the ```./data/visc```. Move all files in ```./data/new``` to ```./data/archive```. Otherwise go back to LAMMPS for longer simulation until obtaining the desired results.
 5.	Create a Jupyter notebook to do analysis and write report using the modules in ```./src``` and the data in ```./data/visc```.  Export results if necessary for publication and making figures using other software.
+
+Tutorials 
+------
+* How to compute viscosity?
+* How to check the equilibrium or steady-state?
+* How to fit the shear viscosity to a model and calculate the Newtonian viscosity?
+* [Cheatsheet for the post-processing modules](/cheatsheet-1.png).
+
+To-do 
+------
+- [ ] Add citation info when the paper is available online.
+- [ ] Complete the tutorials.
+- [ ] Upload the source code.
