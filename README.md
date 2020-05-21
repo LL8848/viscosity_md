@@ -1,12 +1,11 @@
-# viscosity_nemd
-
+# Viscosity Prediction through Non-Equilibrium Molecular Dynamics Simulation
 What this code does
 ------
 * Prepare scripts for standard non-equilibrium molecular dynamics (NEMD) simulation in LAMMPS to compute viscosity.
-* Post-process the outputs from LAMMPS and perform conprehensive analysis.
+* Post-process the outputs from LAMMPS and perform comprehensive analysis.
 * Users can predict the viscosity of any liquid for various temperature, pressure and shear rate.
 * Users can perform block averaging and autocorrelation analysis to evaluate the computing uncertainties and sampling quality.
-* Various rheology models can be used to fit the shear viscosity to extrapolate the Newtonian viscosity. Supported models include Eyring, Carreau, Carreau-Yasuda, Cross.
+* Users can fit the shear viscosities to a rheology model to extrapolate the Newtonian viscosity. Supported models include Eyring, Carreau, Carreau-Yasuda, Cross. Users can also add their own models by writing a Python function using the template.
 
 Dependencies
 ------
