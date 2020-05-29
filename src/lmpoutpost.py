@@ -5,19 +5,6 @@ import pandas as pd
 
 from statsmodels.graphics import tsaplots
 
-#class Viscdata:
-#
-#    def __init__(self,material,temp,press,srate,data,
-#                timestep=0.5,outputfreq=100000):
-#        self.material = material
-#        self.temp = temp # temperature [K]
-#        self.press = press # pressure [MPa]
-#        self.srate = srate # strain rate [s^-1]
-#        self.data = data
-#        self.timestep = timestep # = 0.5 ns by default
-#        self.outputfreq = outputfreq # = 100000 by default
-
-
 
 def loadlmpout(filename):
 
@@ -293,16 +280,6 @@ def blockSizing(data, isplot=True, maxBlockSize=0):
         plt.xlabel('block size')
         plt.ylabel('block standard error (BSE)')
 
-#         plt.subplot(3,1,3)
-#         plt.errorbar(v, blockMean, blockSE)
-#         plt.ylabel('<x>')
-#         plt.xlabel('block size')
-#         plt.subplot(2,1,2)
-#         plt.plot(v, blockNum,'b-')
-#         plt.ylabel('Number of blocks')
-#         plt.xlabel('block size')
-
-        # print("<x> = {0:f} +/- {1:f}\n".format(blockMean[-1], blockSE[-1]))
 
         fig.suptitle('Block Size Analysis',fontsize=16)
 #         plt.tight_layout()
