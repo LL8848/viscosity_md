@@ -31,28 +31,7 @@ class Viscdata:
         self.sslength = 20  # length of steady-state [ns]. Default: 20 ns
         self.ssdata = self.data.iloc[-int(self.sslength/(self.dt*1e-6)/outputfreq):]
         self.outputfreq = outputfreq # = 100000 by default
-
         
-#    def plot(self):
-#        srate = float(self.srate)
-#        visc_running_ave = self.visc.rolling(window=10) # running average of eta
-#
-#        fig, ax = plt.subplots(2,1,sharex=True)
-#        fig.suptitle(f'NEMD data of {self.material} for {self.temp}, {self.press}' + 
-#                    f'\n shear rate = {srate:.0e} 1/s'
-#                    )
-#
-#        ax[0].scatter(self.time,self.visc,marker="+")
-#        ax[0].plot(self.time,visc_running_ave.mean(),c="r",label='moving average')
-#        ax[0].axvline(1/srate*1e9,linestyle='--',c='b',label='1/srate={:.1f} ns'.format(1/srate*1e9))
-#        ax[0].set_ylabel('viscosity [mPa s]')
-#        ax[0].legend()
-#
-#        ax[1].plot(self.time,visc_running_ave.std(),c='orange')
-#        ax[1].set_ylabel('moving window std')
-#        ax[1].set_xlabel('time [ns]')
-#        ax[1].axvline(1/srate*1e9,linestyle='--',c='b',label='1/srate={:.1f} ns'.format(1/srate*1e9))
-#        plt.show()
     
     def info(self,ifprint=True):
         # srate = standardsrate(self.srate)
