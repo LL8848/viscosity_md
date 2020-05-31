@@ -1,1 +1,1 @@
-Files will be uploaded once our paper is available online.
+# Input & output files of NEMD simulations in LAMMPS
