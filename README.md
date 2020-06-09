@@ -59,4 +59,3 @@ To-do
 ------
 - [ ] Add citation info when the paper is available online.
 - [ ] Complete the tutorials.
-- [ ] Upload the source code.
