@@ -1,0 +1,128 @@
+# LAMMPS input code to equilibrate a system that contains 125 PEC6 molecules
+# PEC6: pentaerythritol tetrahexanoate
+# Author: Lingnan Lin, Ph.D., lingnan.lin@nist.gov
+# Please cite the following article if you use this code
+#
+#
+
+atom_style full
+units real
+
+# ff and T0 are passed by command line
+variable	T0  equal 373		# initial temperature [K] (state of input file)
+variable    Tt  equal 373       # target temperature [K]
+variable 	P0  equal 1.0		# pressure [atm]
+variable    DT  equal 0.5       # timestep [fs]
+
+variable    rho equal density
+variable 	vol equal vol
+variable 	etotal equal etotal
+variable    pe equal pe
+variable    ke equal ke
+variable    temperature equal temp
+variable    pressure equal press
+
+# read data file
+# read_data   pec6.${ff}.rep
+
+# read restart file from previous equilibrium run
+read_restart pec6_125.equi373K_0.1MPa
+
+# initialization
+bond_style harmonic
+angle_style harmonic
+dihedral_style opls
+improper_style harmonic
+pair_style lj/cut/coul/long 12.0 12.0
+pair_modify tail yes mix geometric
+special_bonds lj/coul 0.0 0.0 0.5
+kspace_style pppm 0.0001
+
+# force field parameters
+include    pec6.lopls2015.settings
+
+timestep ${DT}
+# reset_timestep  0
+
+# nvt at Tt, explore the configuration space (relax the system)
+print "------------------------------------------------------------"
+print "Run nvt at Tt ${Tt} K to explore the configuration space (relax the system) ..."
+print "   "
+fix    relax all nvt/omp temp ${Tt} ${Tt} $(100*dt)
+fix    nvt_monitor all ave/time 10 1000 10000 v_pressure v_etotal v_ke v_pe ave running file nvt_monitor.out
+thermo    10000
+thermo_style    custom step temp vol press density pe etotal
+run             20000000	# 20*0.5 nanoseconds
+unfix           relax
+unfix           nvt_monitor
+write_restart  	pec6.relax.*
+
+# equilibrate at constant pressure
+print "------------------------------------------------------------"
+print "Run npt at ${P0} atm to find the appropriate density ..."
+print "   "
+fix 		barostat all npt/omp temp ${Tt} ${Tt} $(100*dt) iso ${P0} ${P0} $(1000*dt)
+fix         npt_monitor all ave/time 10 1000 10000 v_rho v_etotal ave one file npt_monitor.out
+thermo		10000
+thermo_style   	custom step temp vol press density pe etotal
+restart 1000000 npt0.${Tt}K.restart.A npt0.${Tt}K.restart.B
+run		40000000	# 20 ns
+write_restart  	pec6.barostat.*
+
+unfix		barostat
+unfix       npt_monitor
+
+
+# production run of density calculation
+print "------------------------------------------------------------"
+print "Productin run for density ..."
+print "   "
+fix 		nptproduction all npt/omp temp ${Tt} ${Tt} $(100*dt) iso ${P0} ${P0} $(1000*dt)
+fix         onerho all ave/time 10 1000 10000 v_rho ave one file pro.density_one.out
+fix         runrho all ave/time 10 1000 10000 v_rho ave running file pro.density_running.out
+thermo		10000
+thermo_style   	custom step temp vol press pe etotal f_onerho f_runrho
+restart 1000000 pnpt.${Tt}K.restart.A    pnpt.${Tt}K.restart.B
+run		10000000	# 5 ns
+unfix		nptproduction
+write_restart  	pec6.nptproduction.*
+
+
+variable    averho  equal f_runrho
+variable        fr equal (${rho}/${averho})^(1/3.0)  # resize ratio
+print "------------------------------------------------------------"
+print "Average density: ${averho} g/cm3"
+print "Current transient density: ${rho} g/cm3"
+print "Resize ratio, (average rho/transient rhoe)^(1/3.0): ${fr}"
+unfix       runrho
+unfix       onerho
+
+change_box all x scale ${fr} y scale ${fr} z scale ${fr} remap
+
+# reassign the velociy by temperature
+velocity   all create ${Tt} 1544152331 mom yes rot yes dist gaussian
+print "------------------------------------------------------------"
+print "System volume is now $(vol) A^3"
+print "Density equals to $(density) g/cm3"
+print "------------------------------------------------------------"
+
+
+
+# Final nvt
+print "------------------------------------------------------------"
+print "Run final nvt at Tt ${Tt} K  ..."
+print "   "
+fix    nvt_final all nvt/omp temp ${Tt} ${Tt} $(100*dt)
+fix    nvt_monitor_final all ave/time 10 1000 10000 v_pressure v_etotal v_ke v_pe ave one file final_nvt.out
+thermo    10000
+thermo_style    custom step temp vol press density pe etotal
+restart 1000000 fnvt.${Tt}K.restart.A fnvt.${Tt}K.restart.B
+run             40000000	# 20 ns
+# run     100
+unfix           nvt_final
+unfix           nvt_monitor_final
+write_restart  	pec6_125.equi${Tt}K.*
+
+
+# Now the system should be fully equilibrated.
+# This file is used to run NEMD simulation later
