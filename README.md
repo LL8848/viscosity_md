@@ -59,3 +59,10 @@ To-do
 ------
 - [ ] Add citation info when the paper is available online.
 - [ ] Complete the tutorials.
+
+
+Contact 
+------
+Feel free to contact me should you have any questions:
+Lingnan Lin, Ph.D.
+lingnan.lin@nist.gov
