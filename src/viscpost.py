@@ -2,7 +2,11 @@
 """
 Created on Thu Apr 23 14:31:06 2020
 
-@author: Lingnan Lin
+@author: Lingnan Lin, Ph.D.
+
+lingnan.lin@nist.gov
+
+ALL RIGHTS RESERVED
 """
 
 import matplotlib.pyplot as plt
@@ -31,7 +35,7 @@ class Viscdata:
         self.sslength = 20  # length of steady-state [ns]. Default: 20 ns
         self.ssdata = self.data.iloc[-int(self.sslength/(self.dt*1e-6)/outputfreq):]
         self.outputfreq = outputfreq # = 100000 by default
-        
+
     
     def info(self,ifprint=True):
         # srate = standardsrate(self.srate)
@@ -287,7 +291,7 @@ class ViscBatch:
                                method='trf',
                                ftol=1e-12,xtol=1e-12,gtol=1e-12,verbose=2)
            
-# ftol=1e-12,xtol=1e-12,
+        # ftol=1e-12,xtol=1e-12,
         # perr: standard errors of the parameters
         # equal to square root of the diagnol of the covariance matrix
         perr = np.sqrt(np.diag(pcov))     

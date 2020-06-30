@@ -2,7 +2,11 @@
 """
 Created on Sun May  3 15:53:05 2020
 
-@author: lnl5
+@author: Lingnan Lin, Ph.D.
+
+lingnan.lin@nist.gov
+
+ALL RIGHTS RESERVED
 """
 
 import os

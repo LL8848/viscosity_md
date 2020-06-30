@@ -1,3 +1,13 @@
+"""
+Created on Tue April 23 11:20:11 2020
+
+@author: Lingnan Lin, Ph.D.
+
+lingnan.lin@nist.gov
+
+ALL RIGHTS RESERVED
+"""
+
 import matplotlib.pyplot as plt
 import math
 import numpy as np
@@ -280,6 +290,16 @@ def blockSizing(data, isplot=True, maxBlockSize=0):
         plt.xlabel('block size')
         plt.ylabel('block standard error (BSE)')
 
+#         plt.subplot(3,1,3)
+#         plt.errorbar(v, blockMean, blockSE)
+#         plt.ylabel('<x>')
+#         plt.xlabel('block size')
+#         plt.subplot(2,1,2)
+#         plt.plot(v, blockNum,'b-')
+#         plt.ylabel('Number of blocks')
+#         plt.xlabel('block size')
+
+        # print("<x> = {0:f} +/- {1:f}\n".format(blockMean[-1], blockSE[-1]))
 
         fig.suptitle('Block Size Analysis',fontsize=16)
 #         plt.tight_layout()

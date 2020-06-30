@@ -2,7 +2,12 @@
 """
 Created on Sun May  3 17:24:54 2020
 
-@author: lnl5
+@author: Lingnan Lin, Ph.D.
+
+lingnan.lin@nist.gov
+
+ALL RIGHTS RESERVED
+
 """
 # import sys
 import lmpoutpost as lmp
@@ -27,6 +32,9 @@ def analyze(material,temp,press):
     if material == 'PEC5':
         xlim=(1e6,1e11)
         ylim=(1,100)
+    elif float(press) > 500:
+        xlim=(1e6,1e11)
+        ylim=(1,10000)    
     else:
         xlim=(1e6,1e11)
         ylim=(1,1000)
