@@ -4,10 +4,10 @@
 #
 #
 
-atom_style full
-units real
+# ------------------------------------------------------------------------------
+#                              Simulation Parameters
+# ------------------------------------------------------------------------------
 
-# Define parameters
 variable	srate0   equal 2e8 # shear rate [1/s]
 variable    T        equal 373 # temperature [K]
 variable    P        equal 0.1 # pressure    [MPa]
@@ -17,11 +17,17 @@ variable    srate    equal ${srate0}/1e15  # convert shear rate unit from s^-1 t
 variable    pressure equal press
 variable    density  equal density
 
-
 print "------------------------------------------------------------"
 print "NEMD simulation for ${T} K, ${P} MPa"
 print "Strain rate: ${srate0} s^-1 or ${srate} fs^-1"
 print "------------------------------------------------------------"
+
+# ------------------------------------------------------------------------------
+#                    Atom Definition and General MD Settings
+# ------------------------------------------------------------------------------
+
+atom_style full
+units real
 
 # read restart file from previous equilibrium run
 read_restart    pec6_125.equi${T}K_${P}MPa
@@ -36,25 +42,26 @@ pair_style lj/cut/coul/long/omp 12.0 12.0
 pair_modify tail yes mix geometric
 special_bonds lj/coul 0.0 0.0 0.5
 
-# force field parameters, ff is passed by command line
+# force field parameters
 include    pec6.lopls2015.settings
-
 
 change_box all triclinic
 kspace_style pppm 0.0001 # must redefine pppm after changing to triclinic
 
-
+# ------------------------------------------------------------------------------
+#                            Time Step Settings
+# ------------------------------------------------------------------------------
 timestep ${DT}
 reset_timestep	0
-variable	dummytime equal step*dt/1e6  # unit: ns
-variable    totalrunsteps   equal ceil(1/${srate}/${DT}+80000000)
+variable	time equal step*dt/1e6  # unit: ns
+variable    totalrunsteps   equal ceil(1/${srate}/${DT}+50000000)   # adjust according to T,P
 print "------------------------------------------------------------"
 print "Total run steps: ${totalrunsteps}"
 print "------------------------------------------------------------"
 
-
-# CORE part of NEMD simulation; using SLLOD algorithm.
-
+# ------------------------------------------------------------------------------
+#                        CORE part of NEMD simulation
+# ------------------------------------------------------------------------------
 fix		nemd1 all nvt/sllod temp $T $T $(100*dt)
 fix		nemd2 all deform 1 xy erate ${srate} remap v
 
@@ -63,17 +70,11 @@ compute		tilt  all temp/deform # calculate temperautre by subtracting out a stre
 compute     tiltp all pressure tilt
 
 
-
-# data gathering
-variable	baserate equal 0
-variable	firsthlrate equal 0
-variable	basefinalN equal 0
-variable	firsthlfinalN equal 0
-variable 	initialstrain equal ${baserate}*dt*${basefinalN}+${firsthlrate}*dt*(${firsthlfinalN}-${basefinalN})
-variable    strain equal ${initialstrain}+${srate}*dt*(step-${firsthlfinalN})
+# ------------------------------------------------------------------------------
+#                      Compute Thermodynamic Properties
+# ------------------------------------------------------------------------------
 
 compute         myP all pressure NULL virial   # calculate pressure without subtracting deformation
-
 
 variable        stress equal (-1)*c_tiltp[4]  # -pxy
 variable        h1 equal c_tiltp[1]  # pxx
@@ -84,22 +85,78 @@ variable        h5 equal c_tiltp[5]  # pxz
 variable        h6 equal c_tiltp[6]  # pyz
 variable	   visc equal 101325e-12*v_stress/(v_srate) # shear viscosity [mPa s]; first term is unit converter
 
-fix		viscave all ave/time 100 1000 100000 v_visc ave one file ${fname}
-fix     pave all ave/time 100 1000 100000 v_pressure ave one file pressure.out
-fix     ssave all ave/time 100 1000 100000 v_stress ave one file strainstress.out
-fix     pressave all ave/time 100 1000 100000 v_h1 v_h2 v_h3 v_h4 v_h5 v_h6 ave one file Ptensor.out
-fix     virialave all ave/time 100 1000 100000 c_myP[1] c_myP[2] c_myP[3] c_myP[4] c_myP[5] c_myP[6] ave one file virial.out
-fix     ktensorave all ave/time 100 1000 100000 c_tilt[1] c_tilt[2] c_tilt[3] c_tilt[4] c_tilt[5] c_tilt[6] ave one file KEtensor.out # kinetic energy tensor
+fix		tave_visc all ave/time 100 1000 100000 v_visc ave one file ${fname}
+fix     tave_press all ave/time 100 1000 100000 v_pressure ave one file pressure.out
+fix     tave_ss all ave/time 100 1000 100000 v_stress ave one file strainstress.out
+fix     tave_Ptensor all ave/time 100 1000 100000 v_h1 v_h2 v_h3 v_h4 v_h5 v_h6 ave one file Ptensor.out
+fix     tave_virial all ave/time 100 1000 100000 c_myP[1] c_myP[2] c_myP[3] c_myP[4] c_myP[5] c_myP[6] ave one file virial.out
+fix     tave_KEtensor all ave/time 100 1000 100000 c_tilt[1] c_tilt[2] c_tilt[3] c_tilt[4] c_tilt[5] c_tilt[6] ave one file KEtensor.out # kinetic energy tensor
 
 #compute         layers all chunk/atom bin/1d y center 0.05 units reduced
 #fix		vpave all ave/chunk 1000 50000 50000000 layers vx file velocityProfile.txt
 
-# get thermodynamic information
+
+# ------------------------------------------------------------------------------
+#                        Compute Structural Properties
+# ------------------------------------------------------------------------------
+
+compute    mol all chunk/atom molecule
+
+# compute tensor of inertia for each molecule
+compute    inertia all inertia/chunk mol
+fix        tave_inertia all ave/time 100 1000 100000 c_inertia[*] ave one file inertia.out mode vector
+
+# compute tensor of inertia averaged over molecules
+#variable   Ixx equal ave(c_inertia[1])
+#variable   Iyy equal ave(c_inertia[2])
+#variable   Izz equal ave(c_inertia[3])
+#variable   Ixy equal ave(c_inertia[4])
+#variable   Iyz equal ave(c_inertia[5])
+#variable   Ixz equal ave(c_inertia[6])
+#fix        tave_ave_inertia_c all ave/time 100 1000 100000 v_Ixx v_Iyy v_Izz v_Ixy v_Iyz v_Ixz ave one file ave_inertia.out
+
+
+# compute radius of gyration, Rg
+compute    gyration all gyration/chunk mol    # Rg of each molecule
+variable   Rg equal ave(c_gyration)           # average Rg of all molecules
+fix        tave_Rg all ave/time 100 1000 100000 v_Rg ave one file rg.out          # time-averaged Rg
+
+# compute radial distribution function (RDF)
+# when enable this compute, don't forget to change 'special_bonds lj/coul ...' to 1e-50 1e-50 0.5
+#compute    rdf all rdf 100 1 3 1 10 1 8 1 9 1 5 1 4
+#fix        tave_rdf all ave/time 10 1000 10000 c_rdf[*] file rdf.out mode vector
+
+# save coordinates (unwrapped) of all atoms in .DCD files
+dump        dumpdcd all dcd 100000 dumpall.dcd
+dump_modify dumpdcd unwrap yes
+#dump        trj all atom 100000 dump.atom   # save in text files
+
+#group      center_C type 1
+#group      end_C type 4
+#dump       center_C center_C custom 10000 dump.center.* id mol type xu yu zu
+#dump       alldump all custom 10000 dump.all.* id mol type xu yu zu
+
+# compute distance between the center carbon (>C<) and the end carbon (-CH3)
+#variable   s1 equal "sqrt((x[1] - x[9])^2 + (y[1] - y[9])^2 + (z[1] - z[9])^2)"
+#variable   s2 equal "sqrt((x[1] - x[31])^2 + (y[1] - y[31])^2 + (z[1] - z[31])^2)"
+#variable   s3 equal "sqrt((x[1] - x[53])^2 + (y[1] - y[53])^2 + (z[1] - z[53])^2)"
+#variable   s4 equal "sqrt((x[1] - x[75])^2 + (y[1] - y[75])^2 + (z[1] - z[75])^2)"
+#fix        distance all ave/time 10 1000 10000 v_s1 v_s2 v_s3 v_s4 file distance.txt
+
+
+# ------------------------------------------------------------------------------
+#                        Print Information to Log
+# ------------------------------------------------------------------------------
+
 thermo         	100000
-thermo_style    custom step v_dummytime v_strain temp press vol density pe etotal f_pave c_usualT
+thermo_style    custom step v_time temp press vol density pe etotal f_tave_Rg f_tave_press c_usualT
 thermo_modify	temp tilt
 thermo_modify   press tiltp
 
+
+# ------------------------------------------------------------------------------
+#                              Run and Restart
+# ------------------------------------------------------------------------------
 
 restart 1000000 ${T}K.restart.A ${T}K.restart.B
 run		${totalrunsteps}
