@@ -84,4 +84,4 @@ Contact
 ------
 Feel free to contact me should you have any questions:
 Lingnan Lin, Ph.D.
-lingnan.lin@nist.gov
+lingnan dot lin at nist dot gov
