@@ -10,6 +10,10 @@ What this code does
 * Users can fit the shear viscosities to a rheology model to extrapolate the Newtonian viscosity. Supported models include Eyring, Carreau, Carreau-Yasuda, Cross. Users can also add their own models by writing a Python function using the template.
 * Several fully equilibrated systems of polyol esters are provided.  Available chemicals include: pentaerythritol tetrapentanoate (POE5), pentaerythritol tetrahexanoate (PEC6), pentaerythritol tetraheptanoate (POE7), and pentaerythritol tetranonanoate (POE9). Temperature ranges from 258 K to 373 K.  Pressure ranges from 0.1 MPa to 300 MPa.  I'll constantly upload the systems I made to share with you.
 
+Citation
+------
+Lin, L., Kedzierski, M., 2020. Density and viscosity of a polyol ester lubricant: Measurement and molecular dynamics simulation. Int. J. Refrig. 118, 188–201. https://doi.org/10.1016/j.ijrefrig.2020.07.004
+
 Dependencies
 ------
 * The molecular dynamics simulations are done in [LAMMPS](https://lammps.sandia.gov/). 
@@ -57,7 +61,6 @@ Tutorials
 
 To-do 
 ------
-- [ ] Add citation info when the paper is available online.
 - [ ] Complete the tutorials.
 
 
