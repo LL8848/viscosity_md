@@ -12,7 +12,12 @@ What this code does
 
 Citation
 ------
+You're welcome to use this code as long as you cite:
+
 Lin, L., Kedzierski, M., 2020. Density and viscosity of a polyol ester lubricant: Measurement and molecular dynamics simulation. Int. J. Refrig. 118, 188–201. https://doi.org/10.1016/j.ijrefrig.2020.07.004
+
+Address questions or comments to : lingnan dot lin at nist dot gov
+
 
 Dependencies
 ------
