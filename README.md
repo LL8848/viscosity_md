@@ -14,7 +14,7 @@ License & Citation
 ------
 This code is licensed under the Apache v2 license. Feel free to use all or portions for your research or related projects so long as you provide the following citation information:
 
-Lin, L., Kedzierski, M., 2020. Density and viscosity of a polyol ester lubricant: Measurement and molecular dynamics simulation. Int. J. Refrig. 118, 188–201. https://doi.org/10.1016/j.ijrefrig.2020.07.004
+*Lin, L., Kedzierski, M., 2020. Density and viscosity of a polyol ester lubricant: Measurement and molecular dynamics simulation. Int. J. Refrig. 118, 188–201. https://doi.org/10.1016/j.ijrefrig.2020.07.004
 
     @article{Lin2020,
     author = {Lin, Lingnan and Kedzierski, Mark},
