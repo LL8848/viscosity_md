@@ -10,14 +10,26 @@ What this code does
 * Users can fit the shear viscosities to a rheology model to extrapolate the Newtonian viscosity. Supported models include Eyring, Carreau, Carreau-Yasuda, Cross. Users can also add their own models by writing a Python function using the template.
 * Several fully equilibrated systems of polyol esters are provided.  Available chemicals include: pentaerythritol tetrapentanoate (POE5), pentaerythritol tetrahexanoate (PEC6), pentaerythritol tetraheptanoate (POE7), and pentaerythritol tetranonanoate (POE9). Temperature ranges from 258 K to 373 K.  Pressure ranges from 0.1 MPa to 300 MPa.  I'll constantly upload the systems I made to share with you.
 
-Citation
+License & Citation
 ------
-You're welcome to use this code as long as you cite:
+This code is licensed under the Apache v2 license. Feel free to use all or portions for your research or related projects so long as you provide the following citation information:
 
 Lin, L., Kedzierski, M., 2020. Density and viscosity of a polyol ester lubricant: Measurement and molecular dynamics simulation. Int. J. Refrig. 118, 188–201. https://doi.org/10.1016/j.ijrefrig.2020.07.004
 
-Address questions or comments to : lingnan dot lin at nist dot gov
-
+    @article{Lin2020,
+    author = {Lin, Lingnan and Kedzierski, Mark},
+    doi = {10.1016/j.ijrefrig.2020.07.004},
+    file = {:C$\backslash$:/Users/lnl5/Downloads/1-s2.0-S0140700720303066-main.pdf:pdf},
+    issn = {0140-7007},
+    journal = {International Journal of Refrigeration},
+    keywords = {Lubrication,Molecular simulation,NEMD,POE oil,Rheology,Transport property},
+    pages = {188--201},
+    publisher = {Elsevier Ltd},
+    title = {{Density and viscosity of a polyol ester lubricant: Measurement and molecular dynamics simulation}},
+    url = {https://doi.org/10.1016/j.ijrefrig.2020.07.004},
+    volume = {118},
+    year = {2020}
+    }
 
 Dependencies
 ------
