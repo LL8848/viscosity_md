@@ -19,7 +19,6 @@ Lin, L., Kedzierski, M., 2020. Density and viscosity of a polyol ester lubricant
     @article{Lin2020,
     author = {Lin, Lingnan and Kedzierski, Mark},
     doi = {10.1016/j.ijrefrig.2020.07.004},
-    file = {:C$\backslash$:/Users/lnl5/Downloads/1-s2.0-S0140700720303066-main.pdf:pdf},
     issn = {0140-7007},
     journal = {International Journal of Refrigeration},
     keywords = {Lubrication,Molecular simulation,NEMD,POE oil,Rheology,Transport property},
